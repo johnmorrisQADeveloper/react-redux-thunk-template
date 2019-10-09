@@ -8,14 +8,16 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_POSTS:
-      console.log('I am being called');
       return {
         ...state,
         items: payload
       }
     case NEW_POST:
-      return { ...state, 
-        ...payload }
+      return {
+        ...state,
+        items: [payload, ...state.items],
+        item: payload
+      }
     default:
       return state
   }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import { createPost } from '../actions/postActions'
 
-const Postform = () => {
+const Postform = ({createPost}) => {
   const [title, setTitle] = useState('')
-
+  
   const [body, setBody] = useState('')
 
   const titleChangeTextBox = (event) => {
@@ -14,26 +15,19 @@ const Postform = () => {
     setBody(event.target.value)
   }
 
-  const onFormSubmitButton = (event) => {
+  const onFormSubmitButton =  (event) => {
+
     event.preventDefault()
     const post = {
       title,
       body
     }
-    async function fetchData() {
-      return await axios({
-        headers: {'content-type': 'application/json'},
-        method: 'post',
-        data: JSON.stringify(post),
-        url: 'https://jsonplaceholder.typicode.com/posts'})
-    }
-    fetchData().then((res) => console.log(res.data))
-    
+     createPost(post)
   }
   return (
     <div>
       <h1>Add Post</h1>
-      <form onSubmit={onFormSubmitButton}>
+      <form>
         <div>
           <label>Title: </label><br />
           <input onChange={titleChangeTextBox} type="text" value={title} />
@@ -43,10 +37,15 @@ const Postform = () => {
           <textarea onChange={bodyChangeTextBox} name="body" value={body} />
         </div>
         <br />
-        <button onClick={onFormSubmitButton}  type="button">Submit</button>
+        <button onClick={onFormSubmitButton} type="button">Submit</button>
       </form>
     </div>
   )
 }
+const mapStateToProps = (state) => {
+  return {
+    item: state.item
+  }
+}
 
-export default Postform
+export default connect(mapStateToProps, { createPost })(Postform)
