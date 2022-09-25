@@ -1,20 +1,21 @@
-import React from 'react';
-import './App.css';
-import Postform from './components/Postform';
-import Posts from './components/Posts';
-import { Provider } from 'react-redux'
-import store from './store'
+import React from "react";
+import "./App.css";
+
+//redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
+//components
+import Login from "./components/login/Login";
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <Postform />
-        <hr />
-        <Posts />
+        <Login />
       </div>
     </Provider>
-  )
+  );
 }
 
 export default App;
